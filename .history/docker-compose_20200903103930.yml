@@ -96,4 +96,7 @@ services:
             - ${VIRTUAL_HOSTS}:/etc/apache2/sites-available/
             - ${APACHE_LOGS}:/var/log/apache2
         links:
-            - db57:mysql
+            - db57:mysql 
+volumes:
+    - ./backup-57
+    - ./backup-56
