@@ -96,5 +96,5 @@ services:
         links:
             - db57:mysql
 volumes:
-    mysql_bkp_56: 
-    mysql_bkp_57: 
+    mysql_bkp_56: ./backup/db56
+    mysql_bkp_57: ./backup/db56
