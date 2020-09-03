@@ -26,7 +26,8 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - mysql_bkp_56:/var/lib/mysql
+            - ./backup/var/lib/mysql:/var/lib/mysql
+            - ./backup/etc/mysql/mysql.conf.d/:/etc/mysql/mysql.conf.d/
     web:
         build: apache
         environment:

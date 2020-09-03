@@ -13,9 +13,10 @@ services:
         expose:
             # Opens port 3306 on the container
             - '3306'
-             # Where our data will be persisted
+                # Where our data will be persisted
         volumes:
-            - mysql_bkp_57:/var/lib/mysql     
+            - ./backup/var/lib/mysql:/var/lib/mysql
+            - ./backup/etc/mysql/mysql.conf.d/:/etc/mysql/mysql.conf.d/      
     db:
         image: mysql:5.6
         environment:
@@ -26,7 +27,8 @@ services:
         ports:
             - "3306:3306"
         volumes:
-            - mysql_bkp_56:/var/lib/mysql
+            - ./backup/var/lib/mysql:/var/lib/mysql
+            - ./backup/etc/mysql/mysql.conf.d/:/etc/mysql/mysql.conf.d/
     web:
         build: apache
         environment:
@@ -95,6 +97,6 @@ services:
             - ${APACHE_LOGS}:/var/log/apache2
         links:
             - db57:mysql
+# Names our volume
 volumes:
-    mysql_bkp_56:
-    mysql_bkp_57:
+    db57-vol
