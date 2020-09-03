@@ -1,0 +1,95 @@
+version: '3.5'
+services:
+    db57:
+        image: mysql:5.7
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        ports:
+            - "3307:3307"
+        volumes:
+            - ./backup7/var/lib/mysql:/var/lib/mysql
+            - ./backup7/etc/mysql/mysql.conf.d/:/etc/mysql/mysql.conf.d/
+    db:
+        image: mysql:5.6
+        environment:
+            - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+            - MYSQL_DATABASE=${MYSQL_DATABASE}
+            - MYSQL_USER=${MYSQL_USER}
+            - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./backup/var/lib/mysql:/var/lib/mysql
+            - ./backup/etc/mysql/mysql.conf.d/:/etc/mysql/mysql.conf.d/
+    web:
+        build: apache
+        environment:
+            - TERM=${TERM}
+            - XDEBUG_CONFIG=remote_host=host.docker.internal
+            #- PHP_IDE_CONFIG=serverName=localhost # for console debugging
+        depends_on:
+            - db
+        ports:
+            - "82:80"
+            - "444:443"
+        volumes:
+            - ${SYMFONY_APP_PATH}:/var/www/html
+            - ${VIRTUAL_HOSTS}:/etc/apache2/sites-available/
+            - ${APACHE_LOGS}:/var/log/apache2
+        links:
+            - db:mysql
+    web5:
+        build: apache5
+        environment:
+            - TERM=${TERM}
+            #- XDEBUG_CONFIG=remote_host=host.docker.internal
+            #- PHP_IDE_CONFIG=serverName=localhost # for console debugging
+        depends_on:
+            - db
+        ports:
+            - "81:80"
+            - "445:443"
+        volumes:
+            - ${SYMFONY_APP_PATH}:/var/www/html
+            - ${VIRTUAL_HOSTS}:/etc/apache2/sites-available/
+            - ${APACHE_LOGS}:/var/log/apache2
+        links:
+            - db:mysql
+    web733:
+        build: apache733
+        environment:
+            - TERM=${TERM}
+            - XDEBUG_CONFIG=remote_host=host.docker.internal
+            #- PHP_IDE_CONFIG=serverName=localhost # for console debugging
+        depends_on:
+            - db
+        ports:
+            - "83:80"
+            - "446:443"
+        volumes:
+            - ${SYMFONY_APP_PATH}:/var/www/html
+            - ${VIRTUAL_HOSTS}:/etc/apache2/sites-available/
+            - ${APACHE_LOGS}:/var/log/apache2
+        links:
+            - db:mysql
+    web7357:
+        build: apache7357
+        environment:
+            - TERM=${TERM}
+            - XDEBUG_CONFIG=remote_host=host.docker.internal
+            #- PHP_IDE_CONFIG=serverName=localhost # for console debugging
+        depends_on:
+            - db57
+        ports:
+            - "88:80"
+            - "448:443"
+        volumes:
+            - ${SYMFONY_APP_PATH}:/var/www/html
+            - ${VIRTUAL_HOSTS}:/etc/apache2/sites-available/
+            - ${APACHE_LOGS}:/var/log/apache2
+        links:
+            - db57:mysql
+    
